@@ -1,0 +1,1 @@
+* * * * * /usr/bin/php /www/artisan schedule:run > /dev/null &
