@@ -10,20 +10,26 @@ Simple Laravel docker that works! Based on `alpine linux`.
 - Supercronic
 - Supervisor
 
-## Installation
-```
-docker build -t <yourimage> .
-```
-
 ### How to do `composer install` and `npm/yarn install`?
 You can separately do this to prepare your dependencies.
 
 ```
 FROM composer
-COPY <your-src> /app
+COPY <your-src-folder> /app
 RUN composer install
 
 FROM node
 COPY --from=0 /app /app
 RUN yarn install
+
+FROM oozman/laravel-docker
+COPY --from=1 /app /www
+RUN chmod -Rf 777 /www/bootstrap/cache /www/storage
+```
+
+### How to build?
+After building your dependencies, you can start containerizing your app.
+
+```
+docker build -t <your-image-name> .
 ```
