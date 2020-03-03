@@ -64,7 +64,7 @@ COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # COPY src /www
 
 # Set permission (laravel)
-RUN chmod -Rf 777 /www/bootstrap/cache /www/storage
+#RUN chmod -Rf 777 /www/bootstrap/cache /www/storage
 
 EXPOSE 80
 
