@@ -11,7 +11,7 @@ Simple Laravel docker that works! Based on `alpine linux`.
 - Supervisor
 
 ### How to do `composer install` and `npm/yarn install`?
-You can separately do this to prepare your dependencies.
+You can create your own dockerfile and then do this to prepare your dependencies.
 
 ```
 FROM composer
