@@ -22,7 +22,7 @@ FROM node
 COPY --from=0 /app /app
 RUN yarn install
 
-FROM oozman/laravel-docker
+FROM oozman/laravel
 COPY --from=1 /app /www
 RUN chmod -Rf 777 /www/bootstrap/cache /www/storage
 ```
