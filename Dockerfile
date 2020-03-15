@@ -9,6 +9,11 @@ RUN apk add php7 php7-fpm php7-mcrypt php7-soap php7-openssl php7-gmp php7-pdo_o
 
 RUN apk add php7-fileinfo php7-xmlwriter php7-session
 
+# Fix: iconv(): Wrong charset, conversion from UTF-8 to ASCII//TRANSLIT//IGNORE is not allowed
+# @see https://github.com/nunomaduro/phpinsights/issues/43
+RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted gnu-libiconv
+ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
+
 # Install supercronic
 RUN curl -fsSLO "https://github.com/aptible/supercronic/releases/download/v0.1.9/supercronic-linux-amd64"
 RUN chmod +x supercronic-linux-amd64
