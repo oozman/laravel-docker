@@ -1,7 +1,10 @@
-FROM alpine
+FROM alpine:3.12
 
 # Update
 RUN apk update
+
+# PHP 7.4
+RUN apk add --no-cache  --repository http://dl-cdn.alpinelinux.org/alpine/edge/community php
 
 # Install dependencies
 RUN apk add nginx
