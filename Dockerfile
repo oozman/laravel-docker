@@ -18,6 +18,9 @@ RUN curl -fsSLO "https://github.com/aptible/supercronic/releases/download/v0.1.1
 RUN chmod +x supercronic-linux-amd64
 RUN mv supercronic-linux-amd64 /usr/bin/supercronic
 
+# Symlink php8 to php
+RUN ln -s /usr/bin/php8 /usr/bin/php
+
 # Add user
 RUN adduser -D -g 'www' www
 RUN mkdir /www
