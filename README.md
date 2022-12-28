@@ -3,6 +3,10 @@
 # laravel-docker
 Simple Laravel docker that works! Based on `alpine linux`. 
 
+## Docker Hub
+
+See: https://hub.docker.com/r/oozman/php/tags
+
 ## Features
 - Light weight, based on alpine linux.
 - Nginx
