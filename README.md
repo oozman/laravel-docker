@@ -10,30 +10,15 @@ See: https://hub.docker.com/r/oozman/php/tags
 ## Features
 - Light weight, based on alpine linux.
 - Nginx
-- PHP 7.3
+- PHP 8.1
 - Supercronic
 - Supervisor
+- `install-php-extensions` command
 
-### How to do `composer install` and `npm/yarn install`?
-You can create your own dockerfile and then do this to prepare your dependencies.
+### Install PHP extensions
+To install and enable PHP extension, use `install-php-extensions` command.
 
+Example:
 ```
-FROM composer
-COPY <your-src-folder> /app
-RUN composer install
-
-FROM node
-COPY --from=0 /app /app
-RUN yarn install
-
-FROM oozman/laravel
-COPY --from=1 /app /www
-RUN chmod -Rf 777 /www/bootstrap/cache /www/storage
-```
-
-### How to build?
-After building your dependencies, you can start containerizing your app.
-
-```
-docker build -t <your-image-name> .
+RUN install-php-extensions redis ...
 ```
