@@ -10,7 +10,7 @@ See: https://hub.docker.com/r/oozman/php/tags
 ## Features
 - Light weight, based on alpine linux.
 - Nginx
-- PHP 8.1
+- PHP 8.2
 - Supercronic
 - Supervisor
 - `install-php-extensions` command
