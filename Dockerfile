@@ -1,20 +1,18 @@
 FROM php:8.2-fpm-alpine
 
-# Update
-RUN apk update
-
 # Update certificates
-RUN apk --update-cache add ca-certificates
+RUN apk update && apk --no-cache add ca-certificates
 
 # PHP Extension installer
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 RUN chmod +x /usr/local/bin/install-php-extensions
 
 # Install dependencies
-RUN apk add nginx php82-soap php82-openssl php82-gmp php82-pdo_odbc php82-json php82-dom php82-pdo php82-zip php82-mysqli php82-sqlite3 php82-pdo_pgsql php82-bcmath php82-gd php82-odbc php82-pdo_mysql php82-pdo_sqlite php82-gettext php82-xml php82-xmlreader php82-xmlwriter php82-simplexml php82-bz2 php82-iconv php82-pdo_dblib php82-curl php82-ctype php82-tokenizer php82-opcache php82-fileinfo  php82-session php82-mbstring supervisor curl
-RUN install-php-extensions pdo_mysql
+RUN apk --no-cache add nginx supervisor curl mariadb-client postgresql-client
+RUN install-php-extensions redis pcntl posix soap openssl gmp pdo_odbc json dom pdo zip mysqli sqlite3 pdo_pgsql bcmath gd odbc pdo_mysql pdo_sqlite gettext xml xmlreader xmlwriter simplexml bz2 iconv curl ctype tokenizer opcache fileinfo  session mbstring
+
 # Install supercronic
-RUN curl -fsSLO "https://github.com/aptible/supercronic/releases/download/v0.1.12/supercronic-linux-amd64"
+RUN curl -fsSLO "https://github.com/aptible/supercronic/releases/download/v0.2.26/supercronic-linux-amd64"
 RUN chmod +x supercronic-linux-amd64
 RUN mv supercronic-linux-amd64 /usr/bin/supercronic
 
@@ -67,6 +65,9 @@ RUN sed -i "s|;*upload_max_filesize =.*|upload_max_filesize = ${PHP_MAX_UPLOAD}|
 RUN sed -i "s|;*max_file_uploads =.*|max_file_uploads = ${PHP_MAX_FILE_UPLOAD}|i" /usr/local/etc/php/php.ini-production
 RUN sed -i "s|;*post_max_size =.*|post_max_size = ${PHP_MAX_POST}|i" /usr/local/etc/php/php.ini-production
 RUN sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= ${PHP_CGI_FIX_PATHINFO}|i" /usr/local/etc/php/php.ini-production
+
+# Set default php.ini
+RUN mv /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
 # Copy nginx.conf
 COPY config/nginx.conf /etc/nginx/nginx.conf
