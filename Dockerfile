@@ -1,4 +1,4 @@
-FROM  dunglas/frankenphp:php8.3-alpine
+FROM  dunglas/frankenphp:php8.4-alpine
 
 RUN apk --no-cache add sox curl supervisor mariadb-client postgresql-client
 RUN install-php-extensions redis pcntl posix soap openssl gmp pdo_odbc json dom pdo zip mysqli sqlite3 pdo_pgsql bcmath gd odbc pdo_mysql pdo_sqlite gettext xml xmlreader xmlwriter simplexml bz2 iconv curl ctype tokenizer opcache fileinfo  session mbstring sockets
