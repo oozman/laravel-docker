@@ -7,7 +7,7 @@ RUN apk update
 RUN apk --update-cache add ca-certificates
 
 # Install dependencies
-RUN apk add nginx php81 php81-fpm php81-soap php81-openssl php81-gmp php81-pdo_odbc php81-json php81-dom php81-pdo php81-zip php81-mysqli php81-sqlite3 php81-pdo_pgsql php81-bcmath php81-gd php81-odbc php81-pdo_mysql php81-pdo_sqlite php81-gettext php81-xml php81-xmlreader php81-xmlwriter php81-simplexml php81-bz2 php81-iconv php81-pdo_dblib php81-curl php81-ctype php81-tokenizer php81-opcache php81-fileinfo php81-session php81-mbstring supervisor curl
+RUN apk add nginx php81 php81-fpm php81-soap php81-openssl php81-gmp php81-pdo_odbc php81-json php81-dom php81-pdo php81-zip php81-mysqli php81-sqlite3 php81-pdo_pgsql php81-bcmath php81-gd php81-odbc php81-pdo_mysql php81-pdo_sqlite php81-gettext php81-xml php81-xmlreader php81-xmlwriter php81-simplexml php81-bz2 php81-iconv php81-pdo_dblib php81-curl php81-ctype php81-tokenizer php81-opcache php81-fileinfo php81-session php81-mbstring supervisor curl libcap
 
 # Install supercronic
 RUN curl -fsSLO "https://github.com/aptible/supercronic/releases/download/v0.1.12/supercronic-linux-amd64"
@@ -18,10 +18,14 @@ RUN mv supercronic-linux-amd64 /usr/bin/supercronic
 RUN ln -s /usr/bin/php8 /usr/bin/php
 
 # Add user
-RUN adduser -D -g 'www' www
+RUN addgroup -g 1000 -S www
+RUN adduser -u 1000 -S -G www www
 RUN mkdir /www
 RUN chown -R www:www /var/lib/nginx
 RUN chown -R www:www /www
+
+# Allow non-root user to bind to port 80
+RUN setcap 'cap_net_bind_service=+ep' /usr/sbin/nginx
 
 # Set ENV
 ENV PHP_FPM_USER="www"
